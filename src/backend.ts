@@ -10,16 +10,17 @@ export class Backend {
 
 	fetchAllHeroesAsync(): Promise<Hero[]> {
 
-		return new Promise<Hero[]>((resolve, reject) => {
-			setTimeout(() => {
-				var promise = this.http.get('heroes.json')
-					.toRx().map((response: any) => response.json()).toPromise();
-				resolve(promise);
-			}, 1000);
-		});
+		var p = this.http.get('heroes.json')
+			.toRx().map((response: any) => response.json()).toPromise();
 
-		//TODO: here is all you need. We don;t actually want a delay
-		// return this.http.get('heroes.json')
-		// 	.toRx().map((response: any) => response.json()).toPromise();
+		return addLatency(p, 1000);
 	}
+
+}
+function addLatency(promise: Promise<Hero[]>, delay = 0): Promise<Hero[]> {
+		return promise.then(heroes => {
+			return new Promise<Hero[]>((resolve, reject) => {
+				setTimeout(() => resolve(heroes), delay);
+			});
+		}, error => Promise.reject(error));
 }
