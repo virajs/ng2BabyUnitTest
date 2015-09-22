@@ -1,8 +1,14 @@
 {
   "name": "ng2BabyUnitTest",
-  "version": "0.0.0",
-  "private": true,
   "description": "Angular 2 Baby Unit Testing",
+  "version": "0.0.1",
+  "scripts": {
+    "postinstall": "npm run tsd",
+    "tsd": "tsd link --config src/tsd.json && tsd reinstall -r -o --config src/tsd.json",
+    "tsc": "tsc -p src -w",
+    "start": "live-server --open=src",
+    "test": "live-server --open=src/unit-tests.html"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/wardbell/ng2BabyUnitTest"
@@ -13,34 +19,16 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   ],
-  "scripts": {
-      "postinstall": "cd src && tsd reinstall -r -o && cd ..",
-      "tsc": "tsc -p src -w",
-      "start": "live-server --open=src",
-      "test": "live-server --open=src/tests.html"
-  },
-  "bugs": {
-    "url": ""
-  },
   "dependencies": {
-    "angular2": "2.0.0-alpha.35",
-    "es6-module-loader": "^0.16",
-    "systemjs": "^0.16",
+    "angular2": "2.0.0-alpha.37",
+    "systemjs": "0.19.0",
     "traceur": "0.0.91"
   },
   "devDependencies": {
-    "canonical-path": "0.0.2",
-    "del": "^1.2.0",
-    "gulp": "^3.5.6",
-    "gulp-util": "^3.0.6",
-    "gulp-watch": "^4.3.4",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.8",
     "karma-chrome-launcher": "^0.2.0",
     "karma-jasmine": "^0.3.6",
-    "lodash": "^3.10.1",
-    "path": "^0.11.14",
-    "q": "^1.4.1",
     "zone.js": "^0.5.3"
   },
   "contributors": [

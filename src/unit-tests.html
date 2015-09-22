@@ -1,0 +1,57 @@
+<!-- #docregion -->
+<!DOCTYPE html>
+<html>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>Ng App Unit Tests</title>
+<link rel="stylesheet" href="../node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+
+<script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+<script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+<script src="../node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+
+<script src="../node_modules/traceur/bin/traceur-runtime.js"></script>
+<script src="../node_modules/systemjs/dist/system.src.js"></script>
+<script src="../node_modules/angular2/bundles/angular2.dev.js"></script>
+
+<script src="../node_modules/angular2/bundles/test_lib.dev.js"></script>
+<script src="../node_modules/zone.js/dist/long-stack-trace-zone.js"></script>
+<script src="../node_modules/zone.js/dist/jasmine-patch.js"></script>
+
+</head>
+
+<body>
+  <script>
+    (function() {
+        Error.stackTraceLimit=Infinity;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 100;
+
+        System.config({
+          packages: {
+            'app': {defaultExtension: 'js'},
+            'test-helpers': {defaultExtension: 'js'}
+           }
+        });
+
+        var imports = [
+          'test-helpers/dom-setup', // Essential for specs that touch the DOM
+
+          'app/hero.service.no-ng-tests.spec',
+          'app/hero.service.ng-tests.spec',
+
+          'app/heroes.component.spec',
+          'app/hero-detail.component.spec',
+
+          'app/hero.service.1.spec',
+
+          '@empty' // safe sentinel
+
+        ].map(function(spec) {return System.import(spec);});
+
+        Promise.all(imports)
+          .then(window.onload) // re-execute Jasmine's buildup
+          .catch(console.error.bind(console));
+      })();
+  </script>
+</body>
+
+</html>
